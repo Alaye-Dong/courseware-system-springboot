@@ -6,6 +6,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxx课件管理系统</title>
+    <base href="${pageContext.request.contextPath}/">
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="js/calendar.js"></script>
@@ -46,7 +47,7 @@
         </div>
         <div class="providerAdd">
             <%-- TODO 设置必填属性 --%>
-            <form action="user" method="post">
+            <form action="${pageContext.request.contextPath}/user/add" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <input type="hidden" name="action" value="add">
                 <%-- TODO 重复账号校验 --%>

@@ -2,7 +2,6 @@ package com.jxut.courseware.springboot.controller;
 
 import com.jxut.courseware.springboot.entity.User;
 import com.jxut.courseware.springboot.service.UserService;
-import com.jxut.courseware.springboot.service.impl.UserServiceImpl;
 import com.jxut.courseware.springboot.util.PageBean;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,6 @@ public class UserController {
         if (action == null) action = "list";
 
         switch (action) {
-            case "toAdd":
-                return "userAdd";
-            case "toUpdate":
-                int id = Integer.parseInt(request.getParameter("id"));
-                User user = userService.getUserById(id);
-                model.addAttribute("user", user);
-                return "userUpdate";
             case "queryByRealname":
                 String realname = request.getParameter("realname");
                 List<User> users = userService.getUsersByRealname(realname);
@@ -53,6 +45,14 @@ public class UserController {
         }
     }
 
+    @GetMapping("/toUserUpdate")
+    private String toUserUpdate(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "userUpdate";
+    }
+
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "1") int pageNum) {
         int pageSize = 6;
@@ -63,64 +63,66 @@ public class UserController {
         return "userList";
     }
 
-    @PostMapping
-    public String handlePost(@RequestParam String action,
-                             HttpServletRequest request,
-                             Model model) throws Exception {
-        switch (action) {
-            case "add":
-                String realname = request.getParameter("realname");
-                String pwd = request.getParameter("password");
-                String birthday = request.getParameter("birthday");
-                String sex = request.getParameter("sex");
-                String address = request.getParameter("address");
-                String tel = request.getParameter("tel");
-                String type = request.getParameter("type");
+    @GetMapping("/toUserAdd")
+    public String toUserAdd(HttpServletRequest request,
+                            Model model) {
+        return "userAdd";
+    }
 
-                User user = new User();
-                user.setUsername(request.getParameter("username"));
-                user.setRealname(realname);
-                user.setPassword(pwd);
-                user.setBirthday(birthday);
-                user.setSex(sex);
-                user.setAddress(address);
-                user.setTel(tel);
-                user.setType(type);
-
-                userService.addUser(user);
-                return "redirect:/user";
-            case "update":
-                String idStr = request.getParameter("id");
-                if (idStr == null || idStr.trim().isEmpty()) {
-                    throw new Exception("用户ID不能为空");
-                }
-
-                User updateUser = new User();
-                updateUser.setId(Integer.parseInt(idStr));
-                updateUser.setRealname(request.getParameter("realname"));
-                updateUser.setSex(request.getParameter("sex"));
-                updateUser.setBirthday(request.getParameter("birthday"));
-                updateUser.setTel(request.getParameter("tel"));
-                updateUser.setAddress(request.getParameter("address"));
-                updateUser.setType(request.getParameter("type"));
-
-                boolean updateSuccess = userService.updateUser(updateUser);
-                if (updateSuccess) {
-                    return "redirect:/user";
-                } else {
-                    model.addAttribute("error", "更新失败");
-                    model.addAttribute("user", updateUser);
-                    return "userUpdate";
-                }
-            default:
-                return list(model, 1);
+    @PostMapping("/update")
+    private String update(@RequestParam String id, HttpServletRequest request, Model model) throws Exception {
+        String idStr = id;
+        if (idStr == null || idStr.trim().isEmpty()) {
+            throw new Exception("用户ID不能为空");
         }
+
+        User updateUser = new User();
+        updateUser.setId(Integer.parseInt(idStr));
+        updateUser.setRealname(request.getParameter("realname"));
+        updateUser.setSex(request.getParameter("sex"));
+        updateUser.setBirthday(request.getParameter("birthday"));
+        updateUser.setTel(request.getParameter("tel"));
+        updateUser.setAddress(request.getParameter("address"));
+        updateUser.setType(request.getParameter("type"));
+
+        boolean updateSuccess = userService.updateUser(updateUser);
+        if (updateSuccess) {
+            return "redirect:/user";
+        } else {
+            model.addAttribute("error", "更新失败");
+            model.addAttribute("user", updateUser);
+            return "userUpdate";
+        }
+    }
+
+    @PostMapping("/add")
+    public String add(HttpServletRequest request) {
+        String realname = request.getParameter("realname");
+        String pwd = request.getParameter("password");
+        String birthday = request.getParameter("birthday");
+        String sex = request.getParameter("sex");
+        String address = request.getParameter("address");
+        String tel = request.getParameter("tel");
+        String type = request.getParameter("type");
+
+        User user = new User();
+        user.setUsername(request.getParameter("username"));
+        user.setRealname(realname);
+        user.setPassword(pwd);
+        user.setBirthday(birthday);
+        user.setSex(sex);
+        user.setAddress(address);
+        user.setTel(tel);
+        user.setType(type);
+
+        userService.addUser(user);
+        return "redirect:/user";
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
-                       @RequestParam String password,
-                       Model model) {
+                        @RequestParam String password,
+                        Model model) {
         boolean success = userService.login(username, password);
         if (success) {
             return "index";

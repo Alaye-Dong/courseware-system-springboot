@@ -4,6 +4,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxx课件管理系统</title>
+    <base href="${pageContext.request.contextPath}/">
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript" src="js/calendar.js">
@@ -45,7 +46,7 @@
             <span>用户管理页面 >> 用户修改页面</span>
         </div>
         <div class="providerAdd">
-            <form action="user" method="post">
+            <form action="${pageContext.request.contextPath}/user/update" method="post">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="id" value="${user.id}">
 
