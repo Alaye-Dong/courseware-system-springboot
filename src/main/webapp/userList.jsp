@@ -113,22 +113,22 @@
                     <%--    FIXME 分页查询    --%>
                     当前第${currentPage}页，共${totalPages}页
                     <c:if test="${currentPage > 1}">
-                        <a href="?pageNum=1">首页</a>
+                        <a href="?realname=${param.realname}&pageNum=1">首页</a>
                     </c:if>
                     <c:if test="${currentPage > 1}">
-                        <a href="?pageNum=${currentPage - 1}">上一页</a>
+                        <a href="?realname=${param.realname}&pageNum=${currentPage - 1}">上一页</a>
                     </c:if>
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?pageNum=${currentPage + 1}">下一页</a>
+                        <a href="?realname=${param.realname}&pageNum=${currentPage + 1}">下一页</a>
                     </c:if>
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?pageNum=${totalPages}">尾页</a>
+                        <a href="?realname=${param.realname}&pageNum=${totalPages}">尾页</a>
                     </c:if>
-
                     跳转到：
                     <form action="" method="get" style="display: inline;">
                         <input type="number" name="pageNum" min="1" max="${totalPages}" step="1"
                                style="width: 50px;" required/>
+                        <input type="hidden" name="realname" value="${param.realname}"/>
                         页
                         <input type="submit" value="GO" style="width: 50px;font-size: 12px;"/>
                     </form>

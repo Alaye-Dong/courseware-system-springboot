@@ -21,4 +21,8 @@ public interface UserService {
     int countAllUsers();
 
     PageBean<User> getUsersByPage(int pageNum, int pageSize);
+
+    int countUsersByRealname(String realname);
+
+    PageBean<User> getUsersByRealnameWithPage(String realname, int pageNum, int pageSize);
 }

@@ -53,4 +53,16 @@
         SELECT * FROM t_user LIMIT #{start}, #{pageSize}
     </select>
 
+    <select id="queryUsersByRealnameWithPage" resultType="User">
+        SELECT *
+        FROM t_user
+        WHERE realname LIKE CONCAT('%', #{realname}, '%')
+        LIMIT #{start}, #{pageSize}
+    </select>
+
+    <select id="countUsersByRealname" resultType="int">
+        SELECT COUNT(*) FROM t_user
+        WHERE realname LIKE CONCAT('%', #{realname}, '%')
+    </select>
+
 </mapper>

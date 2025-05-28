@@ -7,13 +7,13 @@ import com.jxut.courseware.springboot.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public boolean login(String username, String password) {
         return userMapper.checkUser(username, password);
@@ -55,6 +55,19 @@ public class UserServiceImpl implements UserService {
         int totalUsers = countAllUsers();
         int start = (pageNum - 1) * pageSize;
         List<User> users = userMapper.queryUsersByPage(start, pageSize);
+        return new PageBean<>(pageNum, pageSize, totalUsers, users);
+    }
+
+    @Override
+    public int countUsersByRealname(String realname) {
+        return userMapper.countUsersByRealname(realname);
+    }
+
+    @Override
+    public PageBean<User> getUsersByRealnameWithPage(String realname, int pageNum, int pageSize) {
+        int totalUsers = countUsersByRealname(realname);
+        int start = (pageNum - 1) * pageSize;
+        List<User> users = userMapper.queryUsersByRealnameWithPage(realname, start, pageSize);
         return new PageBean<>(pageNum, pageSize, totalUsers, users);
     }
 }

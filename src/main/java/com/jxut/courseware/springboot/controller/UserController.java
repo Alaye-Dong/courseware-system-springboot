@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -32,13 +30,18 @@ public class UserController {
     }
 
     @GetMapping("/queryByRealname")
-    private String queryByRealname(HttpServletRequest request, Model model) {
-        String realname = request.getParameter("realname");
-        List<User> users = userService.getUsersByRealname(realname);
-        model.addAttribute("userList", users);
+    private String queryByRealname(@RequestParam String realname,
+                                   @RequestParam(defaultValue = "1") int pageNum,
+                                   Model model) {
+        int pageSize = 6;
+        PageBean<User> page = userService.getUsersByRealnameWithPage(realname, pageNum, pageSize);
+        model.addAttribute("userList", page.getItems());
         model.addAttribute("realname", realname);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", page.getCurrentPage());
         return "userList";
     }
+
 
     @PostMapping("/delete")
     private String delete(HttpServletRequest request) {
