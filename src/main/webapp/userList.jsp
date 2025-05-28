@@ -6,10 +6,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxx课件管理系统</title>
-<%--    <base href="${pageContext.request.contextPath}/">--%>
-<%--    FIXME base设置会影响单独的底部的删除确认JS--%>
-    <link rel="stylesheet" href="css/public.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <%--    <base href="${pageContext.request.contextPath}/">--%>
+    <%--    FIXME base设置会影响单独的底部的删除确认JS--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
 </head>
 <body>
 <!--头部-->
@@ -48,7 +48,7 @@
             <span>用户名：</span>
             <%--    TODO 修复查询框和按钮的样式  --%>
             <%--    TODO 查询状态下的分页功能 --%>
-            <form action="${pageContext.request.contextPath}/user" method="get">
+            <form action="${pageContext.request.contextPath}/user/queryByRealname" method="get">
                 <input type="hidden" name="action" value="queryByRealname">
                 <input type="text" name="realname" value="<c:out value="${param.realname}" default=""/>">
                 <button type="submit">查询</button>
@@ -94,7 +94,8 @@
                     <td>
                         <a href="${pageContext.request.contextPath}/user/view?action=view&id=${user.id}"><img
                                 src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="${pageContext.request.contextPath}/user/toUserUpdate?action=toUpdate&id=${user.id}">  <!-- 改为通过Servlet处理 -->
+                        <a href="${pageContext.request.contextPath}/user/toUserUpdate?action=toUpdate&id=${user.id}">
+                            <!-- 改为通过Servlet处理 -->
                             <img src="img/xiugai.png" alt="修改" title="修改"/>
                         </a>
                         <a href="#" class="removeUser" data-id="${user.id}"><img src="img/schu.png" alt="删除"
@@ -168,7 +169,6 @@
         // 点击“确定”执行删除操作
         $('#yes').on('click', function () {
             if (userIdToDelete) {
-                // 使用完整上下文路径 + 正确的 URL 参数格式
                 window.location.href = "user/delete?action=delete&id=" + userIdToDelete;
             }
         });

@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,23 +22,22 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String handleGet(@RequestParam(required = false) String action,
-                            HttpServletRequest request,
-                            Model model) throws Exception {
-        if (action == null) action = "list";
+    public String list(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+        int pageSize = 6;
+        PageBean<User> page = userService.getUsersByPage(pageNum, pageSize);
+        model.addAttribute("userList", page.getItems());
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", page.getCurrentPage());
+        return "userList";
+    }
 
-        switch (action) {
-            case "queryByRealname":
-                String realname = request.getParameter("realname");
-                List<User> users = userService.getUsersByRealname(realname);
-                model.addAttribute("userList", users);
-                model.addAttribute("realname", realname);
-                return "userList";
-            case "delete":
-                return delete(request);
-            default:
-                return list(model, 1);
-        }
+    @GetMapping("/queryByRealname")
+    private String queryByRealname(HttpServletRequest request, Model model) {
+        String realname = request.getParameter("realname");
+        List<User> users = userService.getUsersByRealname(realname);
+        model.addAttribute("userList", users);
+        model.addAttribute("realname", realname);
+        return "userList";
     }
 
     @GetMapping("/delete")
@@ -61,19 +63,8 @@ public class UserController {
         return "userUpdate";
     }
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(defaultValue = "1") int pageNum) {
-        int pageSize = 6;
-        PageBean<User> page = userService.getUsersByPage(pageNum, pageSize);
-        model.addAttribute("userList", page.getItems());
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("currentPage", page.getCurrentPage());
-        return "userList";
-    }
-
     @GetMapping("/toUserAdd")
-    public String toUserAdd(HttpServletRequest request,
-                            Model model) {
+    public String toUserAdd(Model model) {
         return "userAdd";
     }
 
