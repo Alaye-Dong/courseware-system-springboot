@@ -4,6 +4,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxx科技课件管理系统</title>
+    <base href="${pageContext.request.contextPath}/">
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
 </head>

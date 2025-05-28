@@ -103,6 +103,7 @@
             </c:forEach>
             <tr>
                 <td colspan="7">
+                    <%--    FIXME 分页查询    --%>
                     当前第${currentPage}页，共${totalPages}页
                     <c:if test="${currentPage > 1}">
                         <a href="?pageNum=1">首页</a>

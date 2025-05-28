@@ -13,6 +13,15 @@ spring:
     view:
       prefix: /
       suffix: .jsp
+#    static-path-pattern: /**
+#  web:
+#    resources:
+#      static-locations:
+#        - classpath:/META-INF/resources/
+#        - classpath:/resources/
+#        - classpath:/static/
+#        - classpath:/public/
+#        - file:src/main/webapp/
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
