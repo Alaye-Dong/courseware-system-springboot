@@ -40,7 +40,7 @@ public class UserController {
         return "userList";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     private String delete(HttpServletRequest request) {
         int delId = Integer.parseInt(request.getParameter("id"));
         userService.deleteUser(delId);
@@ -119,9 +119,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        Model model) {
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
         boolean success = userService.login(username, password);
         if (success) {
             return "index";

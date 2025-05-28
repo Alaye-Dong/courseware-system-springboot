@@ -47,14 +47,15 @@
         <div class="search">
             <span>用户名：</span>
             <%--    TODO 修复查询框和按钮的样式  --%>
-            <%--    TODO 查询状态下的分页功能 --%>
+            <%--    TODO 查询状态下的分页功能 FIXME 查询状态下的静态资源--%>
             <form action="${pageContext.request.contextPath}/user/queryByRealname" method="get">
                 <input type="hidden" name="action" value="queryByRealname">
-                <input type="text" name="realname" value="<c:out value="${param.realname}" default=""/>">
+                <input type="text" name="realname" placeholder="请输入用户名" value="<c:out value="${param.realname}" default=""/>">
                 <button type="submit">查询</button>
             </form>
             <a href="${pageContext.request.contextPath}/user/toUserAdd">添加用户</a>
         </div>
+
         <!--用户-->
         <table class="providerTable" cellpadding="0" cellspacing="0">
             <tr class="firstTr">
@@ -93,12 +94,12 @@
 
                     <td>
                         <a href="${pageContext.request.contextPath}/user/view?action=view&id=${user.id}"><img
-                                src="img/read.png" alt="查看" title="查看"/></a>
+                                src="${pageContext.request.contextPath}/img/read.png" alt="查看" title="查看"/></a>
                         <a href="${pageContext.request.contextPath}/user/toUserUpdate?action=toUpdate&id=${user.id}">
                             <!-- 改为通过Servlet处理 -->
-                            <img src="img/xiugai.png" alt="修改" title="修改"/>
+                            <img src="${pageContext.request.contextPath}/img/xiugai.png" alt="修改" title="修改"/>
                         </a>
-                        <a href="#" class="removeUser" data-id="${user.id}"><img src="img/schu.png" alt="删除"
+                        <a href="#" class="removeUser" data-id="${user.id}"><img src="${pageContext.request.contextPath}/img/schu.png" alt="删除"
                                                                                  title="删除"/></a>
                     </td>
 
@@ -152,9 +153,9 @@
 <footer class="footer">
 </footer>
 
-<script src="js/jquery.js"></script>
-<script src="js/js.js"></script>
-<script src="js/time.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/js/js.js"></script>
+<script src="${pageContext.request.contextPath}/js/time.js"></script>
 <script>
     $(function () {
         let userIdToDelete = null;
@@ -169,12 +170,27 @@
         // 点击“确定”执行删除操作
         $('#yes').on('click', function () {
             if (userIdToDelete) {
-                window.location.href = "user/delete?action=delete&id=" + userIdToDelete;
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/delete?id="+userIdToDelete,
+                    type: "POST",
+                    success: function() {
+                        // 删除成功后刷新当前页面
+                        location.reload();
+                    },
+                    error: function() {
+                        alert("删除失败，请重试");
+                    }
+                });
+
             }
+
+            // 隐藏弹窗
+            $('.zhezhao').css('display', 'none');
+            $('#removeUse').fadeOut();
         });
+
     });
 </script>
-
 
 </body>
 </html>
