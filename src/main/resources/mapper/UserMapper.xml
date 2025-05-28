@@ -7,50 +7,62 @@
 
     <!-- 登录验证 -->
     <select id="checkUser" resultType="boolean">
-        SELECT COUNT(*) FROM t_user WHERE username = #{username} AND password = #{password}
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE username = #{username}
+          AND password = #{password}
     </select>
 
     <!-- 新增用户 -->
     <insert id="addUser" parameterType="User">
         INSERT INTO t_user(username, password, realname, sex, address, tel, type, birthday)
-        VALUES(#{username}, #{password}, #{realname}, #{sex}, #{address}, #{tel}, #{type}, #{birthday})
+        VALUES (#{username}, #{password}, #{realname}, #{sex}, #{address}, #{tel}, #{type}, #{birthday})
     </insert>
 
     <!-- 删除用户 -->
     <delete id="deleteUser">
-        DELETE FROM t_user WHERE id = #{id}
+        DELETE
+        FROM t_user
+        WHERE id = #{id}
     </delete>
 
     <!-- 更新用户 -->
     <update id="updateUser" parameterType="User">
-        UPDATE t_user SET
-                          realname = #{realname},
-                          sex = #{sex},
-                          address = #{address},
-                          tel = #{tel},
-                          type = #{type},
-                          birthday = #{birthday}
+        UPDATE t_user
+        SET realname = #{realname},
+            sex      = #{sex},
+            address  = #{address},
+            tel      = #{tel},
+            type     = #{type},
+            birthday = #{birthday}
         WHERE id = #{id}
     </update>
 
     <!-- 查询单个用户 -->
     <select id="queryUserById" resultType="User">
-        SELECT * FROM t_user WHERE id = #{id}
+        SELECT *
+        FROM t_user
+        WHERE id = #{id}
     </select>
 
     <!-- 模糊查询用户 -->
     <select id="queryUsersByRealname" resultType="User">
-        SELECT * FROM t_user WHERE realname LIKE CONCAT('%', #{realname}, '%')
+        SELECT *
+        FROM t_user
+        WHERE realname LIKE CONCAT('%', #{realname}, '%')
     </select>
 
     <!-- 查询总记录数 -->
     <select id="countAllUsers" resultType="int">
-        SELECT COUNT(*) FROM t_user
+        SELECT COUNT(*)
+        FROM t_user
     </select>
 
     <!-- 分页查询 -->
     <select id="queryUsersByPage" resultType="User">
-        SELECT * FROM t_user LIMIT #{start}, #{pageSize}
+        SELECT *
+        FROM t_user
+        LIMIT #{start}, #{pageSize}
     </select>
 
     <select id="queryUsersByRealnameWithPage" resultType="User">
@@ -61,7 +73,8 @@
     </select>
 
     <select id="countUsersByRealname" resultType="int">
-        SELECT COUNT(*) FROM t_user
+        SELECT COUNT(*)
+        FROM t_user
         WHERE realname LIKE CONCAT('%', #{realname}, '%')
     </select>
 

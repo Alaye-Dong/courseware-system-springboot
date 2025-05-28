@@ -20,14 +20,12 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String list(@RequestParam(required = false) String realname,
-                       @RequestParam(defaultValue = "1") int pageNum,
-                       Model model) {
+    public String list(@RequestParam(required = false) String realname, @RequestParam(defaultValue = "1") int pageNum, Model model) {
 
         int pageSize = 6;
 
         PageBean<User> page;
-        if (realname != null && !realname.trim().isEmpty()) {
+        if (realname != null && !realname.trim().isEmpty()) {   // 去除前后空格后，字符串不为空
             // 按真实姓名查询
             page = userService.getUsersByRealnameWithPage(realname, pageNum, pageSize);
         } else {

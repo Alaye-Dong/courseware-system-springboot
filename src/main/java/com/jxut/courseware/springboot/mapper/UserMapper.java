@@ -32,9 +32,7 @@ public interface UserMapper {
     // 分页查询用户
     List<User> queryUsersByPage(int start, int pageSize);
 
-    List<User> queryUsersByRealnameWithPage(@Param("realname") String realname,
-                                            @Param("start") int start,
-                                            @Param("pageSize") int pageSize);
+    List<User> queryUsersByRealnameWithPage(@Param("realname") String realname, @Param("start") int start, @Param("pageSize") int pageSize);
 
     int countUsersByRealname(@Param("realname") String realname);
 }

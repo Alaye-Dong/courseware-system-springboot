@@ -12,8 +12,7 @@ public class AuthController {
     private UserService userService;
 
     @RequestMapping("/")
-    public String Welcome(
-            Model model) {
+    public String Welcome(Model model) {
         return "login";
     }
 }
