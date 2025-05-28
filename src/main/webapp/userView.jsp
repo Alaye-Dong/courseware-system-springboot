@@ -66,7 +66,7 @@
                 </c:choose>
             </p>
 
-            <a href="${pageContext.request.contextPath}/user?action=list">返回</a>
+            <a href="javascript:history.back(-1)">返回</a>
         </div>
     </div>
 </section>
