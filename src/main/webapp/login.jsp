@@ -12,7 +12,7 @@
         <h1>xxx课件管理系统</h1>
     </header>
     <section class="loginCont">
-        <form class="loginForm" action="user" method="post">
+        <form class="loginForm" action="user/login" method="post">
             <input type="hidden" name="action" value="login">
             <div class="inputbox">
                 <label for="username">用户名：</label>
