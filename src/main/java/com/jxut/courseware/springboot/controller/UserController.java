@@ -20,28 +20,28 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String list(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+    public String list(@RequestParam(required = false) String realname,
+                       @RequestParam(defaultValue = "1") int pageNum,
+                       Model model) {
+
         int pageSize = 6;
-        PageBean<User> page = userService.getUsersByPage(pageNum, pageSize);
+
+        PageBean<User> page;
+        if (realname != null && !realname.trim().isEmpty()) {
+            // 按真实姓名查询
+            page = userService.getUsersByRealnameWithPage(realname, pageNum, pageSize);
+        } else {
+            // 普通用户列表
+            page = userService.getUsersByPage(pageNum, pageSize);
+        }
+
         model.addAttribute("userList", page.getItems());
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", page.getCurrentPage());
+        model.addAttribute("realname", realname); // 保留搜索内容
+
         return "userList";
     }
-
-    @GetMapping("/queryByRealname")
-    private String queryByRealname(@RequestParam String realname,
-                                   @RequestParam(defaultValue = "1") int pageNum,
-                                   Model model) {
-        int pageSize = 6;
-        PageBean<User> page = userService.getUsersByRealnameWithPage(realname, pageNum, pageSize);
-        model.addAttribute("userList", page.getItems());
-        model.addAttribute("realname", realname);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("currentPage", page.getCurrentPage());
-        return "userList";
-    }
-
 
     @PostMapping("/delete")
     private String delete(HttpServletRequest request) {
