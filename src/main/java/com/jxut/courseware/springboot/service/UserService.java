@@ -25,4 +25,6 @@ public interface UserService {
     int countUsersByRealname(String realname);
 
     PageBean<User> getUsersByRealnameWithPage(String realname, int pageNum, int pageSize);
+
+    User findByUsername(String username);
 }

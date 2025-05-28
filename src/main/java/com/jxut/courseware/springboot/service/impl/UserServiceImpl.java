@@ -70,4 +70,9 @@ public class UserServiceImpl implements UserService {
         List<User> users = userMapper.queryUsersByRealnameWithPage(realname, start, pageSize);
         return new PageBean<>(pageNum, pageSize, totalUsers, users);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return userMapper.findByUsername(username);
+    }
 }

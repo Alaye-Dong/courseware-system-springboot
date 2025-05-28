@@ -23,6 +23,8 @@ public interface UserMapper {
     // 根据ID查询用户
     User queryUserById(int id);
 
+    User findByUsername(String username);
+
     // 按真实姓名模糊查询
     List<User> queryUsersByRealname(String realname);
 

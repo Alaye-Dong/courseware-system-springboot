@@ -4,6 +4,7 @@ import com.jxut.courseware.springboot.entity.User;
 import com.jxut.courseware.springboot.service.UserService;
 import com.jxut.courseware.springboot.util.PageBean;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,9 +121,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    public String login(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
         boolean success = userService.login(username, password);
         if (success) {
+            // 将用户信息放入Session
+            User user = userService.findByUsername(username); // 根据实际情况获取用户对象
+            session.setAttribute("user", user);
             return "index";
         } else {
             model.addAttribute("error", "用户名或密码错误");

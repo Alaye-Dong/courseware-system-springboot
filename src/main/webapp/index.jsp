@@ -14,8 +14,8 @@
     <h1>xxx科技课件管理系统</h1>
 
     <div class="publicHeaderR">
-        <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
-        <a href="login.html">退出</a>
+        <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.user.realname}</span> , 欢迎你！</p>
+        <a href="/logout">退出</a>
     </div>
 </header>
 <!--时间-->
@@ -40,7 +40,7 @@
     <div class="right">
         <img class="wColck" src="img/clock.jpg" alt=""/>
         <div class="wFont">
-            <h2>Admin</h2>
+            <h2>${sessionScope.user.realname}</h2>
             <p>欢迎来到xxx科技课件管理系统!</p>
             <span id="hours"></span>
         </div>

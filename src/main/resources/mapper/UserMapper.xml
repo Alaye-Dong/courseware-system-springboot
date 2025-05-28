@@ -45,6 +45,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findByUsername" resultType="User">
+        SELECT *
+        FROM t_user
+        WHERE username = #{username}
+    </select>
+
     <!-- 模糊查询用户 -->
     <select id="queryUsersByRealname" resultType="User">
         SELECT *
