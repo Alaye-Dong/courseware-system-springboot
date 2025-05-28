@@ -17,9 +17,11 @@ public class AuthController {
         return "index";
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping({"/logout", "/login.html"})
     public String logout(HttpSession session) {
-        session.invalidate(); // 清除Session
+        if (session != null) {
+            session.invalidate(); // 清除Session
+        }
         return "login";
     }
 }
