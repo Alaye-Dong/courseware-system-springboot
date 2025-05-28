@@ -127,7 +127,7 @@ public class UserController {
             // 将用户信息放入Session
             User user = userService.findByUsername(username); // 根据实际情况获取用户对象
             session.setAttribute("user", user);
-            return "index";
+            return "redirect:/index";
         } else {
             model.addAttribute("error", "用户名或密码错误");
             return "login";
