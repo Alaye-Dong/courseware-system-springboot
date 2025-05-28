@@ -6,6 +6,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxx课件管理系统</title>
+<%--    <base href="${pageContext.request.contextPath}/">--%>
+<%--    FIXME base设置会影响单独的底部的删除确认JS--%>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
@@ -90,7 +92,7 @@
                     </td>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/user?action=view&id=${user.id}"><img
+                        <a href="${pageContext.request.contextPath}/user/view?action=view&id=${user.id}"><img
                                 src="img/read.png" alt="查看" title="查看"/></a>
                         <a href="${pageContext.request.contextPath}/user/toUserUpdate?action=toUpdate&id=${user.id}">  <!-- 改为通过Servlet处理 -->
                             <img src="img/xiugai.png" alt="修改" title="修改"/>
@@ -160,16 +162,19 @@
         $('.removeUser').on('click', function (e) {
             e.preventDefault();
             userIdToDelete = $(this).data('id');
+            console.log(userIdToDelete);
         });
 
         // 点击“确定”执行删除操作
         $('#yes').on('click', function () {
             if (userIdToDelete) {
-                window.location.href = "user?action=delete&id=" + userIdToDelete;
+                // 使用完整上下文路径 + 正确的 URL 参数格式
+                window.location.href = "user/delete?action=delete&id=" + userIdToDelete;
             }
         });
     });
 </script>
+
 
 </body>
 </html>

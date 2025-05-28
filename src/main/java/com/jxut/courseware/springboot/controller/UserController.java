@@ -31,18 +31,26 @@ public class UserController {
                 model.addAttribute("userList", users);
                 model.addAttribute("realname", realname);
                 return "userList";
-            case "view":
-                int viewId = Integer.parseInt(request.getParameter("id"));
-                User viewUser = userService.getUserById(viewId);
-                model.addAttribute("user", viewUser);
-                return "userView";
             case "delete":
-                int delId = Integer.parseInt(request.getParameter("id"));
-                userService.deleteUser(delId);
-                return "redirect:/user";
+                return delete(request);
             default:
                 return list(model, 1);
         }
+    }
+
+    @GetMapping("/delete")
+    private String delete(HttpServletRequest request) {
+        int delId = Integer.parseInt(request.getParameter("id"));
+        userService.deleteUser(delId);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/view")
+    private String view(HttpServletRequest request, Model model) {
+        int viewId = Integer.parseInt(request.getParameter("id"));
+        User viewUser = userService.getUserById(viewId);
+        model.addAttribute("user", viewUser);
+        return "userView";
     }
 
     @GetMapping("/toUserUpdate")
