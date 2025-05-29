@@ -48,7 +48,6 @@
             <div class="search">
                 <span>用户名：</span>
                 <%--    TODO 修复查询框和按钮的样式  --%>
-                <%--    TODO 查询状态下的分页功能 --%>
                 <input type="hidden" name="action" value="queryByRealname">
                 <input type="text" name="realname" placeholder="请输入用户名"
                        value="<c:out value="${param.realname}" default=""/>">
@@ -110,7 +109,6 @@
             </c:forEach>
             <tr>
                 <td colspan="7">
-                    <%--    FIXME 分页查询    --%>
                     当前第${currentPage}页，共${totalPages}页
                     <c:if test="${currentPage > 1}">
                         <a href="?realname=${param.realname}&pageNum=1">首页</a>
