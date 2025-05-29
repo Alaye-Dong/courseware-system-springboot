@@ -71,7 +71,7 @@ public class UserController {
 
     // 跳转添加页面
     @GetMapping("/toUserAdd")
-    public String toUserAdd(Model model) {
+    public String toUserAdd() {
         return "userAdd";
     }
 
