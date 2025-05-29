@@ -1,6 +1,7 @@
 package com.jxut.courseware.springboot.controller;
 
 import com.jxut.courseware.springboot.entity.Subject;
+import com.jxut.courseware.springboot.entity.User;
 import com.jxut.courseware.springboot.service.SubjectService;
 import com.jxut.courseware.springboot.util.PageBean;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +26,7 @@ public class SubjectController {
                                @RequestParam(defaultValue = "1") int pageNum,
                                Model model,
                                HttpSession session) {
-        int pageSize = 6; // 每页显示5条数据
+        int pageSize = 6;
         PageBean<Subject> pageBean = subjectService.searchSubjects(subjectName, pageNum, pageSize);
         model.addAttribute("subjects", pageBean.getItems());
         model.addAttribute("pageBean", pageBean);
@@ -39,13 +40,13 @@ public class SubjectController {
     @PostMapping("/add")
     public String addSubject(@RequestParam String subjectName,
                              HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("userId"); // 假设登录用户ID存在session中
-        subjectService.addSubject(subjectName, userId);
+        User user = (User) session.getAttribute("user");
+        subjectService.addSubject(subjectName, user.getId());
         return "redirect:/subject";
     }
 
     // 修改状态
-    @PostMapping("/updateStatus")
+    @GetMapping("/updateStatus")
     public String updateStatus(@RequestParam int id,
                                @RequestParam int status) {
         subjectService.changeStatus(id, status);
