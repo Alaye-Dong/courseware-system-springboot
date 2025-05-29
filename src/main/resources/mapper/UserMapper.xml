@@ -39,23 +39,17 @@
     </update>
 
     <!-- 查询单个用户 -->
-    <select id="queryUserById" resultType="User">
+    <select id="findUserById" resultType="User">
         SELECT *
         FROM t_user
         WHERE id = #{id}
     </select>
 
-    <select id="findByUsername" resultType="User">
+    <!-- 根据用户名查询用户 -->
+    <select id="findUserByUsername" resultType="User">
         SELECT *
         FROM t_user
         WHERE username = #{username}
-    </select>
-
-    <!-- 模糊查询用户 -->
-    <select id="queryUsersByRealname" resultType="User">
-        SELECT *
-        FROM t_user
-        WHERE realname LIKE CONCAT('%', #{realname}, '%')
     </select>
 
     <!-- 查询总记录数 -->
@@ -71,17 +65,19 @@
         LIMIT #{start}, #{pageSize}
     </select>
 
+    <!-- 根据真名模糊查询记录数   -->
+    <select id="countUsersByRealname" resultType="int">
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE realname LIKE CONCAT('%', #{realname}, '%')
+    </select>
+
+    <!-- 根据真名模糊分页查询用户 -->
     <select id="queryUsersByRealnameWithPage" resultType="User">
         SELECT *
         FROM t_user
         WHERE realname LIKE CONCAT('%', #{realname}, '%')
         LIMIT #{start}, #{pageSize}
-    </select>
-
-    <select id="countUsersByRealname" resultType="int">
-        SELECT COUNT(*)
-        FROM t_user
-        WHERE realname LIKE CONCAT('%', #{realname}, '%')
     </select>
 
 </mapper>

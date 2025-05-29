@@ -21,20 +21,21 @@ public interface UserMapper {
     boolean updateUser(User user);
 
     // 根据ID查询用户
-    User queryUserById(int id);
+    User findUserById(int id);
 
-    User findByUsername(String username);
+    // 根据用户名查询用户
+    User findUserByUsername(String username);
 
-    // 按真实姓名模糊查询
-    List<User> queryUsersByRealname(String realname);
-
+    /* 分页显示相关 */
     // 查询所有用户数量
     int countAllUsers();
 
     // 分页查询用户
     List<User> queryUsersByPage(int start, int pageSize);
 
-    List<User> queryUsersByRealnameWithPage(@Param("realname") String realname, @Param("start") int start, @Param("pageSize") int pageSize);
-
+    // 根据真名模糊查询用户数量
     int countUsersByRealname(@Param("realname") String realname);
+
+    // 根据真名模糊分页查询用户
+    List<User> queryUsersByRealnameWithPage(@Param("realname") String realname, @Param("start") int start, @Param("pageSize") int pageSize);
 }

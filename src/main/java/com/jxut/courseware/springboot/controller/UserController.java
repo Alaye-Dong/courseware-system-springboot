@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping({"/user",  "/userList.html"})
+@RequestMapping({"/user", "/userList.html"})
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    // 列表显示
     @GetMapping
     public String list(@RequestParam(required = false) String realname, @RequestParam(defaultValue = "1") int pageNum, Model model) {
 
@@ -42,6 +43,7 @@ public class UserController {
         return "userList";
     }
 
+    //  删除
     @PostMapping("/delete")
     private String delete(HttpServletRequest request) {
         int delId = Integer.parseInt(request.getParameter("id"));
@@ -49,36 +51,35 @@ public class UserController {
         return "redirect:/user";
     }
 
+    // 查看
     @GetMapping("/view")
     private String view(HttpServletRequest request, Model model) {
         int viewId = Integer.parseInt(request.getParameter("id"));
-        User viewUser = userService.getUserById(viewId);
+        User viewUser = userService.findUserById(viewId);
         model.addAttribute("user", viewUser);
         return "userView";
     }
 
+    // 跳转修改页面
     @GetMapping("/toUserUpdate")
     private String toUserUpdate(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = userService.getUserById(id);
+        User user = userService.findUserById(id);
         model.addAttribute("user", user);
         return "userUpdate";
     }
 
+    // 跳转添加页面
     @GetMapping("/toUserAdd")
     public String toUserAdd(Model model) {
         return "userAdd";
     }
 
+    // 修改
     @PostMapping("/update")
     private String update(@RequestParam String id, HttpServletRequest request, Model model) throws Exception {
-        String idStr = id;
-        if (idStr == null || idStr.trim().isEmpty()) {
-            throw new Exception("用户ID不能为空");
-        }
-
         User updateUser = new User();
-        updateUser.setId(Integer.parseInt(idStr));
+        updateUser.setId(Integer.parseInt(id));
         updateUser.setRealname(request.getParameter("realname"));
         updateUser.setSex(request.getParameter("sex"));
         updateUser.setBirthday(request.getParameter("birthday"));
@@ -96,6 +97,7 @@ public class UserController {
         }
     }
 
+    // 添加
     @PostMapping("/add")
     public String add(HttpServletRequest request) {
         String realname = request.getParameter("realname");
@@ -120,6 +122,7 @@ public class UserController {
         return "redirect:/user";
     }
 
+    // 登录
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
         boolean success = userService.login(username, password);

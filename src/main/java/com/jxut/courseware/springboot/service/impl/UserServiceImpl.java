@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.checkUser(username, password);
     }
 
-
     @Override
     public void addUser(User user) {
         userMapper.addUser(user);
@@ -36,13 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-        return userMapper.queryUserById(id);
-    }
-
-    @Override
-    public List<User> getUsersByRealname(String realname) {
-        return userMapper.queryUsersByRealname(realname);
+    public User findUserById(int id) {
+        return userMapper.findUserById(id);
     }
 
     @Override
@@ -73,6 +67,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        return userMapper.findByUsername(username);
+        return userMapper.findUserByUsername(username);
     }
 }
