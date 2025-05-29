@@ -80,9 +80,8 @@
                             <c:otherwise>未知</c:otherwise>
                         </c:choose>
                     </td>
-                    <td> <!-- TODO 年龄计算 -->
-                            ${user.birthday}
-                    </td>
+                    <%--由JS计算年龄--%>
+                    <td class="age-cell" data-birthday="${user.birthday}">计算中...</td>
                     <td>${user.tel}</td>
                     <td>
                         <c:choose>
@@ -159,6 +158,34 @@
 <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/js.js"></script>
 <script src="${pageContext.request.contextPath}/js/time.js"></script>
+<script>
+    function calculateAge(birthDateString) {
+        const birthDate = new Date(birthDateString);
+        const today = new Date();
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const ageCells = document.querySelectorAll(".age-cell");
+
+        ageCells.forEach(cell => {
+            const birthDateStr = cell.getAttribute("data-birthday");
+            if (birthDateStr) {
+                const age = calculateAge(birthDateStr);
+                cell.textContent = age;
+            }
+        });
+    });
+</script>
+
 <script>
     $(function () {
         let userIdToDelete = null;
