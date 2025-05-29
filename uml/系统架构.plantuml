@@ -1,0 +1,22 @@
+@startuml
+skinparam componentStyle rectangle
+
+[Controller 层] --> [Service 层]
+[Service 层] --> [DAO / Mapper 层]
+[DAO / Mapper 层] --> [MySQL 数据库]
+
+[View (JSP)] --> [Controller 层] : HTTP 请求
+[Controller 层] --> [View (JSP)] : 返回视图
+
+[View (JSP)] --> [静态资源 (CSS/JS/Images)]
+
+[Controller 层] <.. [配置类 (WebConfig)]
+[Controller 层] <.. [拦截器 (LoginInterceptor)]
+
+[Service 层] <.. [分页工具 PageBean]
+[Entity / Model 层] <.. [Lombok 实体工具]
+
+[Entity / Model 层] --> [Service 层]
+[Entity / Model 层] --> [DAO / Mapper 层]
+
+@enduml

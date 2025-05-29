@@ -1,0 +1,44 @@
+@startuml
+skinparam componentStyle rectangle
+
+package "MVC 架构" {
+  [UserController] as controller
+  [UserService] as service
+  [UserMapper] as mapper
+  [User] as model
+  [userList.jsp / userAdd.jsp / login.jsp] as view
+}
+
+[MySQL 数据库] as db
+
+controller --> service : 调用服务
+service --> mapper : 调用数据访问
+mapper --> db : 操作数据库
+view --> controller : HTTP 请求
+controller --> view : 返回视图
+
+note right of controller
+  处理用户请求：增删改查、登录等
+end note
+
+note right of service
+  核心业务逻辑处理
+end note
+
+note right of mapper
+  MyBatis 接口定义
+end note
+
+note right of model
+  用户实体类
+end note
+
+note right of view
+  JSP 页面渲染
+end note
+
+note right of db
+  存储用户信息
+end note
+
+@enduml
