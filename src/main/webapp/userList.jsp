@@ -54,7 +54,7 @@
                 <button type="submit">
                     <input type="button" value="查询"/>
                 </button>
-                <a href="${pageContext.request.contextPath}/user/toUserAdd">添加用户</a>
+                <a href="userAdd.jsp">添加用户</a>
             </div>
         </form>
         <!--用户-->

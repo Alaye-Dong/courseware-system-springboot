@@ -69,12 +69,6 @@ public class UserController {
         return "userUpdate";
     }
 
-    // 跳转添加页面
-    @GetMapping("/toUserAdd")
-    public String toUserAdd() {
-        return "userAdd";
-    }
-
     // 修改
     @PostMapping("/update")
     private String update(@RequestParam String id, HttpServletRequest request, Model model) throws Exception {
@@ -98,6 +92,7 @@ public class UserController {
     }
 
     // 添加
+    // userList页面中点击添加按钮herf，跳转到userAdd.jsp页面，确认添加会触发此方法
     @PostMapping("/add")
     public String add(HttpServletRequest request) {
         String realname = request.getParameter("realname");
