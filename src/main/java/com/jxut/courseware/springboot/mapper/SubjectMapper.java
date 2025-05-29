@@ -17,4 +17,12 @@ public interface SubjectMapper {
 
     // 修改状态
     void updateStatusById(@Param("id") Integer id, @Param("status") Integer status);
+
+    // 新增：带分页查询
+    List<Subject> searchBySubjectNameWithPage(@Param("subjectName") String subjectName,
+                                              @Param("start") int start,
+                                              @Param("pageSize") int pageSize);
+
+    // 新增：统计数量
+    int countSubjectsByName(@Param("subjectName") String subjectName);
 }

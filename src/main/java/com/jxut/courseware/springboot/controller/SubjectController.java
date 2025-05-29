@@ -2,13 +2,15 @@ package com.jxut.courseware.springboot.controller;
 
 import com.jxut.courseware.springboot.entity.Subject;
 import com.jxut.courseware.springboot.service.SubjectService;
+import com.jxut.courseware.springboot.util.PageBean;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping({"/subject", "/subjectList.html"})
@@ -20,13 +22,18 @@ public class SubjectController {
     // 模糊查询 & 列表展示
     @GetMapping
     public String listSubjects(@RequestParam(required = false) String subjectName,
+                               @RequestParam(defaultValue = "1") int pageNum,
                                Model model,
                                HttpSession session) {
-        List<Subject> subjects = subjectService.searchSubjects(subjectName);
-        model.addAttribute("subjects", subjects);
+        int pageSize = 6; // 每页显示5条数据
+        PageBean<Subject> pageBean = subjectService.searchSubjects(subjectName, pageNum, pageSize);
+        model.addAttribute("subjects", pageBean.getItems());
+        model.addAttribute("pageBean", pageBean);
         model.addAttribute("user", session.getAttribute("user"));
+        model.addAttribute("subjectName", subjectName); // 回显搜索框内容
         return "subjectList";
     }
+
 
     // 添加科目
     @PostMapping("/add")

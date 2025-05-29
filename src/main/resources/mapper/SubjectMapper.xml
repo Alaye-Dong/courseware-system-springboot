@@ -14,7 +14,6 @@
         WHERE s.subject_name LIKE CONCAT('%', #{subjectName}, '%')
     </select>
 
-
     <!-- 添加科目 -->
     <insert id="insertSubject">
         INSERT INTO t_subject(subject_name, creator_id)
@@ -28,4 +27,23 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 分页查询 -->
+    <select id="searchBySubjectNameWithPage" resultType="com.jxut.courseware.springboot.entity.Subject">
+        SELECT s.id,
+               s.subject_name AS subjectName,
+               s.creator_id   AS creatorId,
+               s.status,
+               u.realname     AS creatorRealname
+        FROM t_subject s
+                 LEFT JOIN t_user u ON s.creator_id = u.id
+        WHERE s.subject_name LIKE CONCAT('%', #{subjectName}, '%')
+        LIMIT #{start}, #{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countSubjectsByName" resultType="int">
+        SELECT COUNT(*)
+        FROM t_subject
+        WHERE subject_name LIKE CONCAT('%', #{subjectName}, '%')
+    </select>
 </mapper>

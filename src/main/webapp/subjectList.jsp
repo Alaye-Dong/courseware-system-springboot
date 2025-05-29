@@ -82,8 +82,33 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
+
                 </tr>
             </c:forEach>
+            <tr>
+                <td colspan="5">
+                    当前第 ${pageBean.currentPage} 页，共 ${pageBean.totalPages} 页，
+                    共 ${pageBean.totalItems} 条数据
+                    <c:if test="${pageBean.currentPage > 1}">
+                        <a href="${pageContext.request.contextPath}/subject?subjectName=${subjectName}&pageNum=1">首页</a>&nbsp;
+                        <a href="${pageContext.request.contextPath}/subject?subjectName=${subjectName}&pageNum=${pageBean.currentPage - 1}">上一页</a>&nbsp;
+                    </c:if>
+                    <c:if test="${pageBean.currentPage < pageBean.totalPages}">
+                        <a href="${pageContext.request.contextPath}/subject?subjectName=${subjectName}&pageNum=${pageBean.currentPage + 1}">下一页</a>&nbsp;
+                        <a href="${pageContext.request.contextPath}/subject?subjectName=${subjectName}&pageNum=${pageBean.totalPages}">尾页</a>
+                    </c:if>
+
+                    跳转到：
+                    <form action="" method="get" style="display: inline;">
+                        <input type="number" name="pageNum" min="1" max="${totalPages}" step="1"
+                               style="width: 50px;" required/>
+                        <input type="hidden" name="subjectName" value="${param.subjectName}"/>
+                        页
+                        <input type="submit" value="GO" style="width: 50px;font-size: 12px;"/>
+                    </form>
+                </td>
+            </tr>
+
         </table>
 
 
