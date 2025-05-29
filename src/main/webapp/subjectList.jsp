@@ -74,11 +74,11 @@
                         <c:choose>
                             <c:when test="${subject.status == 1}">
                                 <a href="${pageContext.request.contextPath}/subject/updateStatus?id=${subject.id}&status=0"
-                                   onclick="return confirm('确定要禁用该科目吗？')">禁用</a>
+                                   onclick="return confirm('确定要禁用该科目吗？')"><img src="img/schu.png" alt="禁用" title="禁用"/></a>
                             </c:when>
                             <c:otherwise>
                                 <a href="${pageContext.request.contextPath}/subject/updateStatus?id=${subject.id}&status=1"
-                                   onclick="return confirm('确定要启用该科目吗？')">启用</a>
+                                   onclick="return confirm('确定要启用该科目吗？')"><img src="img/xiugai.png" alt="启用" title="启用"/></a>
                             </c:otherwise>
                         </c:choose>
                     </td>

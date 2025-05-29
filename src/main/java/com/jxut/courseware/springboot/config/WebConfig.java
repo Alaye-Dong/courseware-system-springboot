@@ -8,13 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-//  FIXME 注意！开发时关闭了拦截器配置
-//    @Autowired
-//    private LoginInterceptor loginInterceptor;
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(loginInterceptor)
-//                .excludePathPatterns("/login.jsp","/user/login", "/css/**", "/js/**", "/img/**"); // 排除登录页和静态资源
-//    }
+
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .excludePathPatterns("/login.jsp","/user/login", "/css/**", "/js/**", "/img/**"); // 排除登录页和静态资源
+    }
 }
