@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxut.courseware.springboot.mapper.SubjectMapper">
+
+    <!-- 模糊查询 -->
+    <select id="searchBySubjectName" resultType="com.jxut.courseware.springboot.entity.Subject">
+        SELECT s.id,
+               s.subject_name AS subjectName,
+               s.creator_id   AS creatorId,
+               s.status,
+               u.realname     AS creatorRealname
+        FROM t_subject s
+                 LEFT JOIN t_user u ON s.creator_id = u.id
+        WHERE s.subject_name LIKE CONCAT('%', #{subjectName}, '%')
+    </select>
+
+
+    <!-- 添加科目 -->
+    <insert id="insertSubject">
+        INSERT INTO t_subject(subject_name, creator_id)
+        VALUES (#{subjectName}, #{creatorId})
+    </insert>
+
+    <!-- 修改状态 -->
+    <update id="updateStatusById">
+        UPDATE t_subject
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
