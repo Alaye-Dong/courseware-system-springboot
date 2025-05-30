@@ -100,7 +100,7 @@
 
                     跳转到：
                     <form action="" method="get" style="display: inline;">
-                        <input type="number" name="pageNum" min="1" max="${totalPages}" step="1"
+                        <input type="number" name="pageNum" min="1" max="${pageBean.totalPages}" step="1"
                                style="width: 50px;" required/>
                         <input type="hidden" name="subjectName" value="${param.subjectName}"/>
                         页
